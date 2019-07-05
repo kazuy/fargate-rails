@@ -1,0 +1,34 @@
+version: '2'
+services:
+  web:
+    container_name: fargate-web
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/web/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
+  app:
+    container_name: fargate-app
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - bundle:/usr/local/bundle
+    depends_on:
+      - db
+  db:
+    container_name: fargate-db
+    image: mysql:5.7.26
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+volumes:
+  bundle:
+    driver: local

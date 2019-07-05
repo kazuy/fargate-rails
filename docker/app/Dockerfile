@@ -12,9 +12,9 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash && \
 # set up
 ENV HOME /home/fargate-rails
 WORKDIR $HOME
-ADD Gemfile* $HOME/
+COPY Gemfile* $HOME/
 RUN bundle install --jobs=4 --retry=3
-ADD . $HOME/
+COPY . $HOME/
 
 # server up
 EXPOSE 3000
