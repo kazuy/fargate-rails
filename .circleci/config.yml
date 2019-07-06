@@ -11,6 +11,12 @@ jobs:
             pip3 --version
             pip3 install awscli --upgrade --user
             ~/.local/bin/aws --version
+      - setup_remote_docker
+      - run:
+          name: Build Docker images
+          command: |
+            docker --version
+            docker-compose --version
 #      - run:
 #          name: Install Amazon ECS-CLI
 #          command: |
@@ -23,12 +29,6 @@ jobs:
 #          command: |
 #            ecs-cli configure profile --profile-name default --access-key $AWS_ACCESS_KEY_ID --secret-key $AWS_SECRET_ACCESS_KEY
 #            ecs-cli configure --cluster fargate-rails-cluster --region ap-northeast-1 --default-launch-type FARGATE --config-name fargate-rails
-#      - setup_remote_docker
-#      - run:
-#          name: Build Docker images
-#          command: |
-#            docker --version
-#            docker --help
 #      - run:
 #          name: Compose Service Up
 #          command: |
