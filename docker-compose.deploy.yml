@@ -9,8 +9,6 @@ services:
         - NGINX_HOST=127.0.0.1
     ports:
       - "80:80"
-    volumes:
-      - ./docker/web/nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - app
   app:
@@ -24,8 +22,3 @@ services:
       - "3000:3000"
     environment:
       - RAILS_ENV=production
-    volumes:
-      - bundle:/usr/local/bundle
-volumes:
-  bundle:
-    driver: local
