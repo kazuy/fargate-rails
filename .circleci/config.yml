@@ -19,6 +19,22 @@ jobs:
             docker build --file ./docker/web/Dockerfile --build-arg NGINX_HOST=127.0.0.1 --tag fargate-rails-web .
             docker build --file ./docker/app/Dockerfile --build-arg RAILS_ENV=production --tag fargate-rails-app .
             docker images
+      - run:
+          name: Push Docker images
+          command: |
+            $(~/.local/bin/aws ecr get-login --no-include-email --region ap-northeast-1)
+
+            docker tag fargate-rails-web:latest $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/fargate-rails-web:latest
+            docker tag fargate-rails-web:latest $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/fargate-rails-web:$CIRCLE_SHA1
+
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/fargate-rails-web:latest
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/fargate-rails-web:$CIRCLE_SHA1
+
+            docker tag fargate-rails-app:latest $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/fargate-rails-app:latest
+            docker tag fargate-rails-app:latest $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/fargate-rails-app:$CIRCLE_SHA1
+
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/fargate-rails-app:latest
+            docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/fargate-rails-app:$CIRCLE_SHA1
 #      - run:
 #          name: Install Amazon ECS-CLI
 #          command: |
