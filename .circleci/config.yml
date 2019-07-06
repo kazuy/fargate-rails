@@ -2,27 +2,31 @@ version: 2.1
 jobs:
   deploy:
     docker:
-      - image: alpine
+      - image: circleci/python:3.7.3-stretch
     steps:
       - checkout
       - run:
-          name: Install Amazon ECS-CLI
+          name: Install AWS CLI
           command: |
-            apk --update-cache --no-cache add curl
-            curl -o /usr/local/bin/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
-            chmod +x /usr/local/bin/ecs-cli
-            ecs-cli --version
-      - run:
-          name: Configure Amazon ECS-CLI profile
-          command: |
-            ecs-cli configure profile --profile-name default --access-key $AWS_ACCESS_KEY_ID --secret-key $AWS_SECRET_ACCESS_KEY
-            ecs-cli configure --cluster fargate-rails-cluster --region ap-northeast-1 --default-launch-type FARGATE --config-name fargate-rails
-      - setup_remote_docker
-      - run:
-          name: Build Docker images
-          command: |
-            docker --version
-            docker --help
+            pip3 --version
+#      - run:
+#          name: Install Amazon ECS-CLI
+#          command: |
+#            apk --update-cache --no-cache add curl
+#            curl -o /usr/local/bin/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
+#            chmod +x /usr/local/bin/ecs-cli
+#            ecs-cli --version
+#      - run:
+#          name: Configure Amazon ECS-CLI profile
+#          command: |
+#            ecs-cli configure profile --profile-name default --access-key $AWS_ACCESS_KEY_ID --secret-key $AWS_SECRET_ACCESS_KEY
+#            ecs-cli configure --cluster fargate-rails-cluster --region ap-northeast-1 --default-launch-type FARGATE --config-name fargate-rails
+#      - setup_remote_docker
+#      - run:
+#          name: Build Docker images
+#          command: |
+#            docker --version
+#            docker --help
 #      - run:
 #          name: Compose Service Up
 #          command: |
