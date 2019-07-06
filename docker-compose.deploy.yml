@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/web/Dockerfile
+      args:
+        - NGINX_HOST=127.0.0.1
     ports:
       - "80:80"
     volumes:
