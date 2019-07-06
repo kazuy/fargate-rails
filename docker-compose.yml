@@ -16,6 +16,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
+      args:
+        - RAILS_ENV=development
     ports:
       - "3000:3000"
     volumes:
