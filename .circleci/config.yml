@@ -16,7 +16,9 @@ jobs:
           name: Build Docker images
           command: |
             docker --version
-            docker-compose --version
+            docker build --file ./docker/web/Dockerfile --build-arg NGINX_HOST=127.0.0.1 --tag fargate-rails-web .
+            docker build --file ./docker/app/Dockerfile --build-arg RAILS_ENV=production --tag fargate-rails-app .
+            docker images
 #      - run:
 #          name: Install Amazon ECS-CLI
 #          command: |

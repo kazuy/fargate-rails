@@ -19,4 +19,5 @@ COPY . $HOME/
 # server up
 EXPOSE 3000
 ARG RAILS_ENV=development
+RUN echo $RAILS_ENV
 CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0", "-p", "3000", "-e", "$RAILS_ENV"]
