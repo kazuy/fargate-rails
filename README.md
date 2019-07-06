@@ -1,24 +1,15 @@
-# README
+# fargate-rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Build for development
 
-Things you may want to cover:
+```
+$ docker-compose build
+$ docker-compose up
+```
 
-* Ruby version
+## Build for production
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+$ docker-compose -f docker-compose.deploy.yml build --build-arg AWS_ACCESS_KEY_ID=<your-aws-access-key-id> --build-arg AWS_SECRET_ACCESS_KEY=<your-aws-secret-access-key> app
+$ docker-compose -f docker-compose.deploy.yml up
+```

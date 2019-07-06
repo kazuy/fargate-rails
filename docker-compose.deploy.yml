@@ -15,11 +15,13 @@ services:
     container_name: fargate-app
     build:
       context: .
-      dockerfile: ./docker/app/Dockerfile
+      dockerfile: ./docker/app/Dockerfile.deploy
       args:
         - RAILS_ENV=production
     ports:
       - "3000:3000"
+    environment:
+      - RAILS_ENV=production
     volumes:
       - bundle:/usr/local/bundle
 volumes:
