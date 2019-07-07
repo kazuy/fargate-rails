@@ -17,7 +17,11 @@ jobs:
           command: |
             docker --version
             docker build --file ./docker/web/Dockerfile --build-arg NGINX_HOST=127.0.0.1 --tag fargate-rails-web .
-            docker build --file ./docker/app/Dockerfile --build-arg RAILS_ENV=production --tag fargate-rails-app .
+            docker build --file ./docker/app/Dockerfile.deploy \
+                         --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+                         --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+                         --build-arg RAILS_ENV=production \
+                         --tag fargate-rails-app .
             docker images
       - run:
           name: Push Docker images
